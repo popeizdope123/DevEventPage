@@ -37,7 +37,14 @@ function slugify(title: string): string {
 function normalizeDate(value: string): string {
   // Date-only ISO strings are parsed as UTC, so keep them as-is to avoid timezone shifts.
   if (ISO_DATE_ONLY.test(value)) {
-    if (Number.isNaN(new Date(value).getTime())) {
+    const parsed = new Date(value);
+    const [year, month, day] = value.split("-").map(Number);
+    if (
+      Number.isNaN(parsed.getTime()) ||
+      parsed.getUTCFullYear() !== year ||
+      parsed.getUTCMonth() + 1 !== month ||
+      parsed.getUTCDate() !== day
+    ) {
       throw new Error(`Invalid date: "${value}"`);
     }
     return value;
