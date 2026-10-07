@@ -57,3 +57,5 @@ export const events: EventItem[] = [
     time: "8:00 AM - 6:00 PM PT",
   },
 ];
+
+export default events;
